@@ -155,6 +155,28 @@ enum SidebarMetadataFormat: String {
     case markdown
 }
 
+enum SidebarWorkspacePanelKind: Equatable {
+    case pane
+    case agent
+    case worktree
+}
+
+enum SidebarWorkspacePanelActivationTarget: Equatable {
+    case panel(UUID)
+}
+
+struct SidebarWorkspacePanelItem: Identifiable, Equatable {
+    let id: String
+    let kind: SidebarWorkspacePanelKind
+    let title: String
+    let subtitle: String?
+    let icon: String
+    let tintHex: String?
+    let isActive: Bool
+    let showsUnreadIndicator: Bool
+    let activationTarget: SidebarWorkspacePanelActivationTarget
+}
+
 private struct SessionPaneRestoreEntry {
     let paneId: PaneID
     let snapshot: SessionPaneLayoutSnapshot
@@ -5533,6 +5555,7 @@ final class Workspace: Identifiable, ObservableObject {
     @Published var panelDirectories: [UUID: String] = [:]
     @Published var panelTitles: [UUID: String] = [:]
     @Published private(set) var panelCustomTitles: [UUID: String] = [:]
+    @Published private(set) var sidebarSelectionToken: UInt64 = 0
     @Published private(set) var pinnedPanelIds: Set<UUID> = []
     @Published private(set) var manualUnreadPanelIds: Set<UUID> = []
     @Published private(set) var tmuxLayoutSnapshot: LayoutSnapshot?
@@ -5614,6 +5637,8 @@ final class Workspace: Identifiable, ObservableObject {
                 .map { _ in () }
                 .eraseToAnyPublisher(),
             sidebarObservationSignal($panelDirectories),
+            sidebarObservationSignal($panelTitles),
+            sidebarObservationSignal($panelCustomTitles),
             sidebarObservationSignal($statusEntries),
             sidebarObservationSignal($metadataBlocks),
             sidebarObservationSignal($logEntries),
@@ -5627,6 +5652,7 @@ final class Workspace: Identifiable, ObservableObject {
             sidebarObservationSignal($remoteConnectionDetail),
             sidebarObservationSignal($activeRemoteTerminalSessionCount),
             sidebarObservationSignal($listeningPorts),
+            sidebarObservationSignal($sidebarSelectionToken),
         ]
 
         return Publishers.MergeMany(publishers).eraseToAnyPublisher()
@@ -6723,6 +6749,70 @@ final class Workspace: Identifiable, ObservableObject {
             paneTabs: paneTabs,
             fallbackPanelIds: fallbackPanelIds
         )
+    }
+
+    func sidebarOrderedPaneIds() -> [PaneID] {
+        let orderedTreePaneIds = SidebarBranchOrdering.orderedPaneIds(tree: bonsplitController.treeSnapshot())
+        let paneByRawId = Dictionary(uniqueKeysWithValues: bonsplitController.allPaneIds.map { ($0.id.uuidString, $0) })
+
+        var ordered: [PaneID] = []
+        var seen = Set<UUID>()
+
+        for rawId in orderedTreePaneIds {
+            guard let paneId = paneByRawId[rawId], seen.insert(paneId.id).inserted else { continue }
+            ordered.append(paneId)
+        }
+
+        for paneId in bonsplitController.allPaneIds where seen.insert(paneId.id).inserted {
+            ordered.append(paneId)
+        }
+
+        return ordered
+    }
+
+    func sidebarPanelItems() -> [SidebarWorkspacePanelItem] {
+        sidebarOrderedPaneIds().compactMap { paneId in
+            let tabs = bonsplitController.tabs(inPane: paneId)
+            guard let selectedSurfaceId = bonsplitController.selectedTab(inPane: paneId)?.id ?? tabs.first?.id,
+                  let panelId = panelIdFromSurfaceId(selectedSurfaceId),
+                  let panel = panels[panelId] else {
+                return nil
+            }
+
+            let title = resolvedSidebarPanelTitle(panelId: panelId, fallback: panel.displayTitle)
+            return SidebarWorkspacePanelItem(
+                id: "pane-\(paneId.id.uuidString)",
+                kind: .pane,
+                title: title,
+                subtitle: nil,
+                icon: sidebarPanelSystemImageName(for: panel),
+                tintHex: nil,
+                isActive: focusedPanelId == panelId,
+                showsUnreadIndicator: false,
+                activationTarget: .panel(panelId)
+            )
+        }
+    }
+
+    private func resolvedSidebarPanelTitle(panelId: UUID, fallback: String) -> String {
+        if let custom = panelCustomTitles[panelId]?.trimmingCharacters(in: .whitespacesAndNewlines), !custom.isEmpty {
+            return custom
+        }
+        if let title = panelTitles[panelId]?.trimmingCharacters(in: .whitespacesAndNewlines), !title.isEmpty {
+            return title
+        }
+        return fallback
+    }
+
+    private func sidebarPanelSystemImageName(for panel: any Panel) -> String {
+        switch panel {
+        case is BrowserPanel:
+            return "globe"
+        case is MarkdownPanel:
+            return "doc.text"
+        default:
+            return "terminal"
+        }
     }
 
     private func normalizedSidebarDirectory(_ directory: String?) -> String? {
@@ -9798,7 +9888,7 @@ final class Workspace: Identifiable, ObservableObject {
             let failure = NSAlert()
             failure.alertStyle = .warning
             failure.messageText = String(localized: "alert.moveTab.failed.title", defaultValue: "Move Failed")
-            failure.informativeText = String(localized: "alert.moveTab.failed.message", defaultValue: "cmux could not move this tab to the selected destination.")
+            failure.informativeText = String(localized: "alert.moveTab.failed.message", defaultValue: "CursedMux could not move this tab to the selected destination.")
             failure.addButton(withTitle: String(localized: "alert.ok", defaultValue: "OK"))
             _ = failure.runModal()
         }
@@ -10148,6 +10238,7 @@ extension Workspace: BonsplitDelegate {
                 GhosttyNotificationKey.surfaceId: panelId
             ]
         )
+        sidebarSelectionToken &+= 1
 #if DEBUG
         let prevPanelShort = previousFocusedPanelId.map { String($0.uuidString.prefix(5)) } ?? "nil"
         dlog(

@@ -8,13 +8,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "A program running within cmux would like to use your camera."
+            "value": "A program running within CursedMux would like to use your camera."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux 内で実行中のプログラムがカメラの使用を求めています。"
+            "value": "CursedMux 内で実行中のプログラムがカメラの使用を求めています。"
           }
         }
       }
@@ -25,13 +25,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "A program running within cmux would like to use your microphone."
+            "value": "A program running within CursedMux would like to use your microphone."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux 内で実行中のプログラムがマイクの使用を求めています。"
+            "value": "CursedMux 内で実行中のプログラムがマイクの使用を求めています。"
           }
         },
         "zh-Hans": {

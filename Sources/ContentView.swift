@@ -8671,6 +8671,7 @@ struct VerticalTabsSidebar: View {
     @StateObject private var tabItemSettingsStore = SidebarTabItemSettingsStore()
     @State private var draggedTabId: UUID?
     @State private var dropIndicator: SidebarDropIndicator?
+    @State private var expandedWorkspaceIds: Set<UUID> = []
     @AppStorage(WorkspacePresentationModeSettings.modeKey)
     private var workspacePresentationMode = WorkspacePresentationModeSettings.defaultMode.rawValue
     @AppStorage(KeyboardShortcutSettings.Action.selectWorkspaceByNumber.defaultsKey)
@@ -8746,7 +8747,7 @@ struct VerticalTabsSidebar: View {
                                 let allRemoteContextMenuTargetsDisconnected = usesSelectedContextMenuTargets
                                     ? allSelectedRemoteContextMenuTargetsDisconnected
                                     : (tab.isRemoteWorkspace && tab.remoteConnectionState == .disconnected)
-                                TabItemView(
+                                SidebarWorkspaceRowContainer(
                                     tabManager: tabManager,
                                     notificationStore: notificationStore,
                                     tab: tab,
@@ -8781,9 +8782,16 @@ struct VerticalTabsSidebar: View {
                                     remoteContextMenuWorkspaceIds: remoteContextMenuWorkspaceIds,
                                     allRemoteContextMenuTargetsConnecting: allRemoteContextMenuTargetsConnecting,
                                     allRemoteContextMenuTargetsDisconnected: allRemoteContextMenuTargetsDisconnected,
-                                    settings: tabItemSettings
+                                    settings: tabItemSettings,
+                                    isExpanded: expandedWorkspaceIds.contains(tab.id),
+                                    toggleExpansion: {
+                                        if expandedWorkspaceIds.contains(tab.id) {
+                                            expandedWorkspaceIds.remove(tab.id)
+                                        } else {
+                                            expandedWorkspaceIds.insert(tab.id)
+                                        }
+                                    }
                                 )
-                                .equatable()
                             }
                         }
                         .padding(.vertical, 8)
@@ -8847,6 +8855,9 @@ struct VerticalTabsSidebar: View {
             modifierKeyMonitor.start()
             draggedTabId = nil
             dropIndicator = nil
+            if expandedWorkspaceIds.isEmpty, let selectedTabId = tabManager.selectedTabId {
+                expandedWorkspaceIds.insert(selectedTabId)
+            }
             SidebarDragLifecycleNotification.postStateDidChange(
                 tabId: nil,
                 reason: "sidebar_appear"
@@ -8895,6 +8906,199 @@ struct VerticalTabsSidebar: View {
     private func debugShortSidebarTabId(_ id: UUID?) -> String {
         guard let id else { return "nil" }
         return String(id.uuidString.prefix(5))
+    }
+}
+
+private struct SidebarWorkspaceRowContainer: View {
+    private static let workspaceObservationCoalesceInterval: RunLoop.SchedulerTimeType.Stride = .milliseconds(40)
+
+    let tabManager: TabManager
+    let notificationStore: TerminalNotificationStore
+    let tab: Tab
+    let index: Int
+    let isActive: Bool
+    let workspaceShortcutDigit: Int?
+    let workspaceShortcutModifierSymbol: String
+    let canCloseWorkspace: Bool
+    let accessibilityWorkspaceCount: Int
+    let unreadCount: Int
+    let latestNotificationText: String?
+    let rowSpacing: CGFloat
+    let setSelectionToTabs: () -> Void
+    @Binding var selectedTabIds: Set<UUID>
+    @Binding var lastSidebarSelectionIndex: Int?
+    let showsModifierShortcutHints: Bool
+    let dragAutoScrollController: SidebarDragAutoScrollController
+    @Binding var draggedTabId: UUID?
+    @Binding var dropIndicator: SidebarDropIndicator?
+    let contextMenuWorkspaceIds: [UUID]
+    let remoteContextMenuWorkspaceIds: [UUID]
+    let allRemoteContextMenuTargetsConnecting: Bool
+    let allRemoteContextMenuTargetsDisconnected: Bool
+    let settings: SidebarTabItemSettingsSnapshot
+    let isExpanded: Bool
+    let toggleExpansion: () -> Void
+    @State private var workspaceObservationGeneration: UInt64 = 0
+
+    private var panelItems: [SidebarWorkspacePanelItem] {
+        let _ = workspaceObservationGeneration
+        return tab.sidebarPanelItems().map { item in
+            switch item.activationTarget {
+            case .panel(let panelId):
+                return SidebarWorkspacePanelItem(
+                    id: item.id,
+                    kind: item.kind,
+                    title: item.title,
+                    subtitle: item.subtitle,
+                    icon: item.icon,
+                    tintHex: item.tintHex,
+                    isActive: item.isActive,
+                    showsUnreadIndicator: notificationStore.hasVisibleNotificationIndicator(
+                        forTabId: tab.id,
+                        surfaceId: panelId
+                    ),
+                    activationTarget: item.activationTarget
+                )
+            }
+        }
+    }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 3) {
+            TabItemView(
+                tabManager: tabManager,
+                notificationStore: notificationStore,
+                tab: tab,
+                index: index,
+                isActive: isActive,
+                workspaceShortcutDigit: workspaceShortcutDigit,
+                workspaceShortcutModifierSymbol: workspaceShortcutModifierSymbol,
+                canCloseWorkspace: canCloseWorkspace,
+                accessibilityWorkspaceCount: accessibilityWorkspaceCount,
+                unreadCount: unreadCount,
+                latestNotificationText: latestNotificationText,
+                rowSpacing: rowSpacing,
+                setSelectionToTabs: setSelectionToTabs,
+                selectedTabIds: $selectedTabIds,
+                lastSidebarSelectionIndex: $lastSidebarSelectionIndex,
+                showsModifierShortcutHints: showsModifierShortcutHints,
+                dragAutoScrollController: dragAutoScrollController,
+                draggedTabId: $draggedTabId,
+                dropIndicator: $dropIndicator,
+                contextMenuWorkspaceIds: contextMenuWorkspaceIds,
+                remoteContextMenuWorkspaceIds: remoteContextMenuWorkspaceIds,
+                allRemoteContextMenuTargetsConnecting: allRemoteContextMenuTargetsConnecting,
+                allRemoteContextMenuTargetsDisconnected: allRemoteContextMenuTargetsDisconnected,
+                settings: settings,
+                hasChildPanels: !panelItems.isEmpty,
+                isExpanded: isExpanded,
+                toggleChildPanels: toggleExpansion
+            )
+            .equatable()
+
+            if isExpanded, !panelItems.isEmpty {
+                VStack(alignment: .leading, spacing: 2) {
+                    ForEach(panelItems) { item in
+                        SidebarWorkspacePanelItemRow(item: item) {
+                            activate(item)
+                        }
+                    }
+                }
+                .padding(.leading, 26)
+                .padding(.trailing, 12)
+                .padding(.bottom, 4)
+                .transition(.opacity.combined(with: .move(edge: .top)))
+            }
+        }
+        .animation(.easeInOut(duration: 0.16), value: isExpanded)
+        .onReceive(
+            tab.sidebarObservationPublisher
+                .receive(on: RunLoop.main)
+                .debounce(for: Self.workspaceObservationCoalesceInterval, scheduler: RunLoop.main)
+        ) { _ in
+            workspaceObservationGeneration &+= 1
+        }
+    }
+
+    private func activate(_ item: SidebarWorkspacePanelItem) {
+        selectedTabIds = [tab.id]
+        lastSidebarSelectionIndex = index
+        setSelectionToTabs()
+
+        switch item.activationTarget {
+        case .panel(let panelId):
+            let wasSelected = tabManager.selectedTabId == tab.id
+            tabManager.selectWorkspacePanel(tabId: tab.id, panelId: panelId)
+            if wasSelected {
+                tabManager.dismissNotificationOnDirectInteraction(tabId: tab.id, surfaceId: panelId)
+            }
+        }
+    }
+}
+
+private struct SidebarWorkspacePanelItemRow: View {
+    let item: SidebarWorkspacePanelItem
+    let onActivate: () -> Void
+
+    private var foregroundColor: Color {
+        item.isActive ? .primary : .secondary
+    }
+
+    private var backgroundColor: Color {
+        item.isActive ? cmuxAccentColor().opacity(0.14) : Color.clear
+    }
+
+    var body: some View {
+        Button(action: onActivate) {
+            HStack(spacing: 7) {
+                ZStack(alignment: .topTrailing) {
+                    Image(systemName: item.icon)
+                        .font(.system(size: 10, weight: .medium))
+                        .foregroundColor(iconColor)
+
+                    if item.showsUnreadIndicator {
+                        Circle()
+                            .fill(cmuxAccentColor())
+                            .frame(width: 5, height: 5)
+                            .offset(x: 3, y: -2)
+                    }
+                }
+                .frame(width: 12, alignment: .center)
+
+                VStack(alignment: .leading, spacing: 1) {
+                    Text(item.title)
+                        .font(.system(size: 11, weight: item.isActive ? .semibold : .regular))
+                        .foregroundColor(item.isActive ? .primary : foregroundColor)
+                        .lineLimit(1)
+                        .truncationMode(.tail)
+
+                    if let subtitle = item.subtitle {
+                        Text(subtitle)
+                            .font(.system(size: 9.5))
+                            .foregroundColor(.secondary)
+                            .lineLimit(1)
+                            .truncationMode(.tail)
+                    }
+                }
+
+                Spacer(minLength: 0)
+            }
+            .padding(.horizontal, 8)
+            .padding(.vertical, 5)
+            .background(
+                RoundedRectangle(cornerRadius: 5)
+                    .fill(backgroundColor)
+            )
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+    }
+
+    private var iconColor: Color {
+        if let tintHex = item.tintHex, let nsColor = NSColor(hex: tintHex) {
+            return Color(nsColor: nsColor)
+        }
+        return item.isActive ? .primary : .secondary
     }
 }
 
@@ -10545,7 +10749,7 @@ private struct SidebarHelpMenuButton: View {
     private var helpPopover: some View {
         VStack(alignment: .leading, spacing: 2) {
             helpOptionButton(
-                title: String(localized: "sidebar.help.welcome", defaultValue: "Welcome to cmux!"),
+                title: String(localized: "sidebar.help.welcome", defaultValue: "Welcome to CursedMux!"),
                 action: .welcome,
                 accessibilityIdentifier: "SidebarHelpMenuOptionWelcome",
                 isExternalLink: false
@@ -11183,6 +11387,8 @@ private struct TabItemView: View, Equatable {
         lhs.remoteContextMenuWorkspaceIds == rhs.remoteContextMenuWorkspaceIds &&
         lhs.allRemoteContextMenuTargetsConnecting == rhs.allRemoteContextMenuTargetsConnecting &&
         lhs.allRemoteContextMenuTargetsDisconnected == rhs.allRemoteContextMenuTargetsDisconnected &&
+        lhs.hasChildPanels == rhs.hasChildPanels &&
+        lhs.isExpanded == rhs.isExpanded &&
         lhs.settings == rhs.settings
     }
 
@@ -11214,6 +11420,9 @@ private struct TabItemView: View, Equatable {
     let allRemoteContextMenuTargetsConnecting: Bool
     let allRemoteContextMenuTargetsDisconnected: Bool
     let settings: SidebarTabItemSettingsSnapshot
+    let hasChildPanels: Bool
+    let isExpanded: Bool
+    let toggleChildPanels: () -> Void
     @State private var workspaceObservationGeneration: UInt64 = 0
     @State private var isHovering = false
     @State private var rowHeight: CGFloat = 1
@@ -11343,6 +11552,10 @@ private struct TabItemView: View, Equatable {
     private var workspaceShortcutLabel: String? {
         guard let workspaceShortcutDigit else { return nil }
         return "\(workspaceShortcutModifierSymbol)\(workspaceShortcutDigit)"
+    }
+
+    private var disclosureIconName: String {
+        isExpanded ? "chevron.down" : "chevron.right"
     }
 
     private var showsWorkspaceShortcutHint: Bool {
@@ -11497,6 +11710,21 @@ private struct TabItemView: View, Equatable {
 
         VStack(alignment: .leading, spacing: 4) {
             HStack(spacing: 8) {
+                if hasChildPanels {
+                    Button(action: toggleChildPanels) {
+                        Image(systemName: disclosureIconName)
+                            .font(.system(size: 9, weight: .semibold))
+                            .foregroundColor(activeSecondaryColor(0.78))
+                            .frame(width: 10, height: 10)
+                    }
+                    .buttonStyle(.plain)
+                    .safeHelp(
+                        isExpanded
+                            ? String(localized: "sidebar.panels.collapse", defaultValue: "Collapse panels")
+                            : String(localized: "sidebar.panels.expand", defaultValue: "Expand panels")
+                    )
+                }
+
                 if unreadCount > 0 {
                     ZStack {
                         Circle()

@@ -2538,8 +2538,17 @@ final class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCent
             }
         }
 
-        // In UI tests, `WindowGroup` occasionally fails to materialize a window quickly on the VM.
-        // If there are no windows shortly after launch, force-create one so XCUITest can proceed.
+        // `WindowGroup` occasionally fails to materialize an initial window on launch.
+        // When that happens, the app can terminate immediately because no windows ever open.
+        // Force-create one if startup still has no windows after a short delay.
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+            guard NSApp.windows.isEmpty else { return }
+            self.openNewMainWindow(nil)
+        }
+
+        // In UI tests, additionally force activation and visibility so the VM's app-under-test
+        // always has a renderable main window.
         if isRunningUnderXCTest {
             if let rawVariant = env["CMUX_UI_TEST_BROWSER_IMPORT_HINT_VARIANT"] {
                 UserDefaults.standard.set(
@@ -2843,7 +2852,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCent
         DispatchQueue.main.async {
             let alert = NSAlert()
             alert.alertStyle = .warning
-            alert.messageText = String(localized: "dialog.quitCmux.title", defaultValue: "Quit cmux?")
+            alert.messageText = String(localized: "dialog.quitCmux.title", defaultValue: "Quit CursedMux?")
             alert.informativeText = String(localized: "dialog.quitCmux.message", defaultValue: "This will close all windows and workspaces.")
             alert.addButton(withTitle: String(localized: "dialog.quitCmux.quit", defaultValue: "Quit"))
             alert.addButton(withTitle: String(localized: "common.cancel", defaultValue: "Cancel"))
@@ -9324,7 +9333,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCent
 
         let alert = NSAlert()
         alert.alertStyle = .warning
-        alert.messageText = String(localized: "dialog.quitCmux.title", defaultValue: "Quit cmux?")
+            alert.messageText = String(localized: "dialog.quitCmux.title", defaultValue: "Quit CursedMux?")
         alert.informativeText = String(localized: "dialog.quitCmux.message", defaultValue: "This will close all windows and workspaces.")
         alert.addButton(withTitle: String(localized: "dialog.quitCmux.quit", defaultValue: "Quit"))
         alert.addButton(withTitle: String(localized: "common.cancel", defaultValue: "Cancel"))
@@ -11967,7 +11976,7 @@ final class MenuBarExtraController: NSObject, NSMenuDelegate {
     private let clearAllItem = NSMenuItem(title: String(localized: "statusMenu.clearAll", defaultValue: "Clear All"), action: nil, keyEquivalent: "")
     private let checkForUpdatesItem = NSMenuItem(title: String(localized: "menu.checkForUpdates", defaultValue: "Check for Updates…"), action: nil, keyEquivalent: "")
     private let preferencesItem = NSMenuItem(title: String(localized: "menu.preferences", defaultValue: "Preferences…"), action: nil, keyEquivalent: "")
-    private let quitItem = NSMenuItem(title: String(localized: "menu.quitCmux", defaultValue: "Quit cmux"), action: nil, keyEquivalent: "")
+    private let quitItem = NSMenuItem(title: String(localized: "menu.quitCmux", defaultValue: "Quit CursedMux"), action: nil, keyEquivalent: "")
 
     private var notificationItems: [NSMenuItem] = []
     private let maxInlineNotificationItems = 6

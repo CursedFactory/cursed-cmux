@@ -202,7 +202,7 @@
 /* End PBXContainerItemProxy section */
 
 		/* Begin PBXFileReference section */
-			A5001000 /* cmux.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cmux.app; sourceTree = BUILT_PRODUCTS_DIR; };
+			A5001000 /* CursedMux.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CursedMux.app; sourceTree = BUILT_PRODUCTS_DIR; };
 			F1000002A1B2C3D4E5F60718 /* cmuxTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = cmuxTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 			7E7E6EF344A568AC7FEE3715 /* cmuxUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = cmuxUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 			A5001011 /* cmuxApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cmuxApp.swift; sourceTree = "<group>"; };
@@ -1031,7 +1031,7 @@
 					Carbon,
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.cmuxterm.app.debug;
-				PRODUCT_NAME = "cmux DEV";
+				PRODUCT_NAME = "CursedMux DEV";
 				SPARKLE_PUBLIC_KEY = "avjcgKibf1FTvhIjLBxhd+0HSpsXU4D0IGlVk8cgqRc=";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "cmux-Bridging-Header.h";
@@ -1070,8 +1070,8 @@
 					Carbon,
 				);
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = com.cmuxterm.app;
-				PRODUCT_NAME = cmux;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cursedmux.app;
+				PRODUCT_NAME = CursedMux;
 				SPARKLE_PUBLIC_KEY = "avjcgKibf1FTvhIjLBxhd+0HSpsXU4D0IGlVk8cgqRc=";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "cmux-Bridging-Header.h";
@@ -1088,7 +1088,7 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "cmux Dock Tile Plugin";
+				INFOPLIST_KEY_CFBundleDisplayName = "CursedMux Dock Tile Plugin";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSPrincipalClass = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
@@ -1113,13 +1113,13 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "cmux Dock Tile Plugin";
+				INFOPLIST_KEY_CFBundleDisplayName = "CursedMux Dock Tile Plugin";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSPrincipalClass = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Bundles";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 0.63.1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.cmuxterm.app.docktileplugin;
+				PRODUCT_BUNDLE_IDENTIFIER = com.cursedmux.app.docktileplugin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
@@ -1214,7 +1214,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/cmux DEV.app/Contents/MacOS/cmux DEV";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CursedMux DEV.app/Contents/MacOS/CursedMux DEV";
 				TEST_TARGET_NAME = GhosttyTabs;
 			};
 			name = Debug;
@@ -1232,7 +1232,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.cmuxterm.apptests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/cmux.app/Contents/MacOS/cmux";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CursedMux.app/Contents/MacOS/CursedMux";
 				TEST_TARGET_NAME = GhosttyTabs;
 			};
 			name = Release;

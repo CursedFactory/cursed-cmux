@@ -889,7 +889,7 @@ private final class GhosttySurfaceCallbackContext {
 
 class GhosttyApp {
     static let shared = GhosttyApp()
-    private static let releaseBundleIdentifier = "com.cmuxterm.app"
+    private static let releaseBundleIdentifier = "com.cursedmux.app"
     private static let backgroundLogTimestampFormatter: ISO8601DateFormatter = {
         let formatter = ISO8601DateFormatter()
         formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]

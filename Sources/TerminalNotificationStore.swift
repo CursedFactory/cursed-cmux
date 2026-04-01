@@ -1273,8 +1273,8 @@ final class TerminalNotificationStore: ObservableObject {
         }
 
         let alert = notificationSettingsAlertFactory()
-        alert.messageText = String(localized: "dialog.enableNotifications.title", defaultValue: "Enable Notifications for cmux")
-        alert.informativeText = String(localized: "dialog.enableNotifications.message", defaultValue: "Notifications are disabled for cmux. Enable them in System Settings to see alerts.")
+        alert.messageText = String(localized: "dialog.enableNotifications.title", defaultValue: "Enable Notifications for CursedMux")
+        alert.informativeText = String(localized: "dialog.enableNotifications.message", defaultValue: "Notifications are disabled for CursedMux. Enable them in System Settings to see alerts.")
         alert.addButton(withTitle: String(localized: "dialog.enableNotifications.openSettings", defaultValue: "Open Settings"))
         alert.addButton(withTitle: String(localized: "dialog.enableNotifications.notNow", defaultValue: "Not Now"))
         alert.beginSheetModal(for: window) { [weak self] response in

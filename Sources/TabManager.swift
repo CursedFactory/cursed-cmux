@@ -3169,6 +3169,20 @@ class TabManager: ObservableObject {
         focusedPanelId(for: tabId)
     }
 
+    func selectWorkspacePanel(tabId: UUID, panelId: UUID) {
+        guard let tab = tabs.first(where: { $0.id == tabId }), tab.panels[panelId] != nil else {
+            return
+        }
+
+        lastFocusedPanelByTab[tabId] = panelId
+        if selectedTabId == tabId {
+            tab.focusPanel(panelId)
+            return
+        }
+
+        selectedTabId = tabId
+    }
+
     func rememberFocusedSurface(tabId: UUID, surfaceId: UUID) {
         lastFocusedPanelByTab[tabId] = surfaceId
     }

@@ -8,115 +8,115 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux"
+            "value": "CursedMux"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux"
+            "value": "CursedMux"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux"
+            "value": "CursedMux"
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux"
+            "value": "CursedMux"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux"
+            "value": "CursedMux"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux"
+            "value": "CursedMux"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux"
+            "value": "CursedMux"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux"
+            "value": "CursedMux"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux"
+            "value": "CursedMux"
           }
         },
         "da": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux"
+            "value": "CursedMux"
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux"
+            "value": "CursedMux"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux"
+            "value": "CursedMux"
           }
         },
         "bs": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux"
+            "value": "CursedMux"
           }
         },
         "ar": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux"
+            "value": "CursedMux"
           }
         },
         "nb": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux"
+            "value": "CursedMux"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux"
+            "value": "CursedMux"
           }
         },
         "th": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux"
+            "value": "CursedMux"
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux"
+            "value": "CursedMux"
           }
         },
         "uk": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux"
+            "value": "CursedMux"
           }
         }
       }
@@ -1247,13 +1247,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Welcome to cmux!"
+            "value": "Welcome to CursedMux!"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmuxへようこそ！"
+            "value": "CursedMuxへようこそ！"
           }
         },
         "uk": {
@@ -5660,7 +5660,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Created cmux profiles: %@"
+            "value": "Created CursedMux profiles: %@"
           }
         },
         "ja": {
@@ -6281,13 +6281,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux could not create the destination profile \"%@\"."
+            "value": "CursedMux could not create the destination profile \"%@\"."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux は保存先プロファイル「%@」を作成できませんでした。"
+            "value": "CursedMux は保存先プロファイル「%@」を作成できませんでした。"
           }
         },
         "uk": {
@@ -6304,7 +6304,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "The selected cmux browser profile no longer exists. Pick a destination profile again."
+            "value": "The selected CursedMux browser profile no longer exists. Pick a destination profile again."
           }
         },
         "ja": {
@@ -6396,7 +6396,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux could not find browser profiles to import from on this Mac."
+            "value": "CursedMux could not find browser profiles to import from on this Mac."
           }
         },
         "ja": {
@@ -7412,7 +7412,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Always allow this host in cmux"
+            "value": "Always allow this host in CursedMux"
           }
         },
         "ja": {
@@ -10172,7 +10172,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Proceed in cmux"
+            "value": "Proceed in CursedMux"
           }
         },
         "ja": {
@@ -33970,13 +33970,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Notifications are disabled for cmux. Enable them in System Settings to see alerts."
+            "value": "Notifications are disabled for CursedMux. Enable them in System Settings to see alerts."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmuxの通知が無効になっています。アラートを表示するにはシステム設定で有効にしてください。"
+            "value": "CursedMuxの通知が無効になっています。アラートを表示するにはシステム設定で有効にしてください。"
           }
         },
         "zh-Hans": {
@@ -34327,13 +34327,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Enable Notifications for cmux"
+            "value": "Enable Notifications for CursedMux"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmuxの通知を有効にする"
+            "value": "CursedMuxの通知を有効にする"
           }
         },
         "zh-Hans": {
@@ -34446,13 +34446,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux could not move this tab to the selected destination."
+            "value": "CursedMux could not move this tab to the selected destination."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmuxはこのタブを選択した移動先に移動できませんでした。"
+            "value": "CursedMuxはこのタブを選択した移動先に移動できませんでした。"
           }
         },
         "zh-Hans": {
@@ -35517,13 +35517,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Quit cmux?"
+            "value": "Quit CursedMux?"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux を終了しますか？"
+            "value": "CursedMux を終了しますか？"
           }
         },
         "zh-Hans": {
@@ -36588,13 +36588,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "About cmux"
+            "value": "About CursedMux"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmuxについて"
+            "value": "CursedMuxについて"
           }
         },
         "zh-Hans": {
@@ -41779,13 +41779,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Quit cmux"
+            "value": "Quit CursedMux"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux を終了"
+            "value": "CursedMux を終了"
           }
         },
         "zh-Hans": {
@@ -47119,7 +47119,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Keep cmux in the menu bar for unread notifications and quick actions."
+            "value": "Keep CursedMux in the menu bar for unread notifications and quick actions."
           }
         },
         "ja": {
@@ -47618,13 +47618,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Restart cmux to apply"
+            "value": "Restart CursedMux to apply"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmuxを再起動して適用"
+            "value": "CursedMuxを再起動して適用"
           }
         },
         "zh-Hans": {
@@ -48063,7 +48063,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Open Sidebar PR Links in cmux Browser"
+            "value": "Open Sidebar PR Links in CursedMux Browser"
           }
         },
         "ja": {
@@ -48301,7 +48301,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Clicks open inside cmux browser."
+            "value": "Clicks open inside CursedMux browser."
           }
         },
         "ja": {
@@ -48420,7 +48420,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Open Sidebar Port Links in cmux Browser"
+            "value": "Open Sidebar Port Links in CursedMux Browser"
           }
         },
         "ja": {
@@ -48658,7 +48658,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Port clicks open inside cmux browser."
+            "value": "Port clicks open inside CursedMux browser."
           }
         },
         "ja": {
@@ -51882,13 +51882,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Share anonymized crash and usage data to help improve cmux."
+            "value": "Share anonymized crash and usage data to help improve CursedMux."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmuxの改善に役立てるため、匿名化されたクラッシュおよび使用状況データを共有します。"
+            "value": "CursedMuxの改善に役立てるため、匿名化されたクラッシュおよび使用状況データを共有します。"
           }
         },
         "zh-Hans": {
@@ -52918,13 +52918,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Briefly flash a blue outline when cmux highlights a pane."
+            "value": "Briefly flash a blue outline when CursedMux highlights a pane."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux がペインを強調表示するときに短い青いアウトラインを表示します。"
+            "value": "CursedMux がペインを強調表示するときに短い青いアウトラインを表示します。"
           }
         },
         "uk": {
@@ -53129,7 +53129,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "When enabled, cmux wraps the claude command to inject session tracking and notification hooks. Disable if you prefer to manage Claude Code hooks yourself."
+            "value": "When enabled, CursedMux wraps the claude command to inject session tracking and notification hooks. Disable if you prefer to manage Claude Code hooks yourself."
           }
         },
         "ja": {
@@ -53248,7 +53248,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Claude Code runs without cmux integration."
+            "value": "Claude Code runs without CursedMux integration."
           }
         },
         "ja": {
@@ -59201,7 +59201,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Open Terminal Links in cmux Browser"
+            "value": "Open Terminal Links in CursedMux Browser"
           }
         },
         "ja": {
@@ -71715,7 +71715,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Only processes started inside cmux terminals can send commands."
+            "value": "Only processes started inside CursedMux terminals can send commands."
           }
         },
         "ja": {
@@ -71834,7 +71834,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux processes only"
+            "value": "CursedMux processes only"
           }
         },
         "ja": {
@@ -76356,7 +76356,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux couldn't download the update feed. Check your connection and try again."
+            "value": "CursedMux couldn't download the update feed. Check your connection and try again."
           }
         },
         "ja": {
@@ -77189,13 +77189,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux can't reach the update server. Check your internet connection and try again."
+            "value": "CursedMux can't reach the update server. Check your internet connection and try again."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux はアップデートサーバーに接続できません。インターネット接続を確認してもう一度お試しください。"
+            "value": "CursedMux はアップデートサーバーに接続できません。インターネット接続を確認してもう一度お試しください。"
           }
         },
         "zh-Hans": {
@@ -77427,7 +77427,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Move cmux into Applications and relaunch to enable updates."
+            "value": "Move CursedMux into Applications and relaunch to enable updates."
           }
         },
         "ja": {
@@ -78141,13 +78141,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux couldn't connect to the update server. Check your connection or try again later."
+            "value": "CursedMux couldn't connect to the update server. Check your connection or try again later."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux はアップデートサーバーに接続できませんでした。接続を確認するか、後でもう一度お試しください。"
+            "value": "CursedMux はアップデートサーバーに接続できませんでした。接続を確認するか、後でもう一度お試しください。"
           }
         },
         "zh-Hans": {
@@ -79807,7 +79807,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux can automatically check for updates in the background."
+            "value": "CursedMux can automatically check for updates in the background."
           }
         },
         "ja": {
@@ -85311,13 +85311,13 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmux could not move this tab to the selected destination."
+            "value": "CursedMux could not move this tab to the selected destination."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "cmuxはこのタブを選択した移動先に移動できませんでした。"
+            "value": "CursedMuxはこのタブを選択した移動先に移動できませんでした。"
           }
         },
         "zh-Hans": {
